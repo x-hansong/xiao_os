@@ -25,9 +25,13 @@ pub extern "C" fn _start() -> ! {
     println!("Hello World{}", "!");
 
     xiao_os::init();
-    // invoke a breakpoint exception
-    x86_64::instructions::interrupts::int3(); // new
 
+    fn stack_overflow() {
+        stack_overflow(); // for each recursion, the return address is pushed
+    }
+
+    // trigger a stack overflow
+//    stack_overflow();
     #[cfg(test)]
         test_main();
     println!("It did not crash!");
